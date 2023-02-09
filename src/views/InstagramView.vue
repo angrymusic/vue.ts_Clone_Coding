@@ -1,6 +1,11 @@
-<script setup>
+<script setup lang="ts">
   import { ref } from 'vue'
+  import Post from '../components/instagram/InstagramPost.vue'
   const tab = ref('posts')
+  const searchBar = ref(false)
+  const clickSearch = () => {
+    searchBar.value = !searchBar.value
+  }
 </script>
 <template>
   <div class="instagram">
@@ -16,8 +21,8 @@
         </svg>
       </div>
       <div class="search-bar col-4 row items-center">
-        <div class="before-click row items-center">
-          <div class="search-icon">
+        <div v-show="!searchBar" @click="clickSearch" class="before-click col row items-center justify-start">
+          <div class="search-icon col-2">
             <svg aria-label="검색" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="16" role="img" viewBox="0 0 24 24" width="16">
               <path
                 d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z"
@@ -30,11 +35,11 @@
               <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="16.511" x2="22" y1="16.511" y2="22"></line>
             </svg>
           </div>
-          검색
         </div>
-        <!-- <div class="after-click">
-          <input />
-        </div> -->
+        <input @focus="clickSearch" class="input-search col-10" placeholder="검색" />
+        <div v-show="searchBar" class="after-click col row items-center justify-between">
+          <div class="exit-search col row justify-end" @click="clickSearch">⨉</div>
+        </div>
       </div>
       <div class="login-buttons row col-4 q-gutter-sm justify-end">
         <div class="login-button row items-center">로그인</div>
@@ -74,8 +79,9 @@
         </q-tabs>
         <q-tab-panels v-model="tab" animated class="color-fafafa text-center col">
           <q-tab-panel name="posts" class="">
-            <div class="text-h6">posts</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="row q-col-gutter-md">
+              <Post v-for="i in 9" :key="i" class="col-4"></Post>
+            </div>
           </q-tab-panel>
 
           <q-tab-panel name="reels" class="">
@@ -93,7 +99,26 @@
   </div>
 </template>
 
-<style>
+<style scoped>
+  .input-search {
+    border: none;
+    background: transparent;
+  }
+  .input-search:focus {
+    outline: none;
+  }
+  .exit-search {
+    cursor: pointer;
+  }
+  .search-icon {
+    transform: translateY(2px);
+  }
+  .search-bar {
+    padding: 0 16px;
+    border-radius: 10px;
+    background-color: #efefef;
+    position: relative;
+  }
   .instagram {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
