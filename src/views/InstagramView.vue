@@ -77,7 +77,7 @@
           <q-tab class="col-1" name="reels" label="릴스" />
           <q-tab class="col-1" name="taged" label="태그됨" />
         </q-tabs>
-        <q-tab-panels v-model="tab" animated class="color-fafafa text-center col">
+        <q-tab-panels v-model="tab" animated class="color-fafafa text-center col padding-0-50px">
           <q-tab-panel name="posts" class="">
             <div class="row q-col-gutter-md">
               <Post v-for="i in 9" :key="i" class="col-4"></Post>
@@ -100,6 +100,9 @@
 </template>
 
 <style scoped>
+  .padding-0-50px {
+    padding: 0 150px;
+  }
   .input-search {
     border: none;
     background: transparent;
@@ -188,5 +191,10 @@
   }
   .color-fafafa {
     background-color: #fafafa;
+  }
+  @media (max-width: 1200px) {
+    .padding-0-50px {
+      padding: 0 10px;
+    }
   }
 </style>
