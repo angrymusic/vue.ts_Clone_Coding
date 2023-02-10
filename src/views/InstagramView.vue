@@ -1,10 +1,39 @@
 <script setup lang="ts">
   import { ref } from 'vue'
+  import axios from 'axios'
   import Post from '../components/instagram/InstagramPost.vue'
   const tab = ref('posts')
+  const file = ref()
+  const title = ref('')
+  const context = ref('')
   const searchBar = ref(false)
   const clickSearch = () => {
     searchBar.value = !searchBar.value
+  }
+  const upload = async () => {
+    const data = new FormData()
+    data.append('title', title.value)
+    data.append('context', context.value)
+    data.append('file', file.value)
+    console.log(file.value)
+    await axios
+      .post(
+        'http://localhost:8090/add',
+        {
+          data: data,
+        },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 </script>
 <template>
@@ -75,7 +104,7 @@
         <q-tabs switch-indicator v-model="tab" class="color-fafafa text-black col row justify-center" narrow-indicator>
           <q-tab class="col-1" name="posts" label="게시글" />
           <q-tab class="col-1" name="reels" label="릴스" />
-          <q-tab class="col-1" name="taged" label="태그됨" />
+          <q-tab class="col-1" name="write" label="글작성" />
         </q-tabs>
         <q-tab-panels v-model="tab" animated class="color-fafafa text-center col padding-0-50px">
           <q-tab-panel name="posts" class="">
@@ -89,9 +118,32 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
 
-          <q-tab-panel name="taged" class="">
-            <div class="text-h6">taged</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <q-tab-panel name="write" class="">
+            <div class="text-h6">게시글 작성</div>
+            <div class="col column justify-center">
+              <div class="col row justify-center">
+                <q-input
+                  class="col-5"
+                  model-value=""
+                  @update:model-value="
+                (val:any) => {
+                  file = val[0]
+                }
+              "
+                  filled
+                  type="file"
+                />
+              </div>
+              <div class="col row justify-center">
+                <q-input filled v-model="title" class="col-5" placeholder="title" dense />
+              </div>
+              <div class="col row justify-center">
+                <q-input v-model="context" class="col-5" placeholder="context" filled type="textarea" />
+              </div>
+              <div class="col row justify-center">
+                <div class="login-button" @click="upload">게시하기</div>
+              </div>
+            </div>
           </q-tab-panel>
         </q-tab-panels>
       </div>
