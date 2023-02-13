@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, onUpdated } from 'vue'
   import axios from 'axios'
   import Post from '../components/instagram/InstagramPost.vue'
   const tab = ref('posts')
@@ -17,7 +17,8 @@
   }
 
   //임시 로그인 아이디
-  const name = ref('angrymusic')
+  const name = ref('angrymusic3')
+
   const imgList = ref<dataType[]>([])
 
   const upload = async () => {
@@ -26,7 +27,6 @@
     data.append('title', title.value)
     data.append('context', context.value)
     data.append('file', file.value)
-    console.log(file.value)
     await axios
       .post('http://localhost:8090/add', data, {
         headers: {
@@ -38,13 +38,15 @@
         console.log(err)
       })
     tab.value = 'posts'
-    getPost()
   }
+  onUpdated(() => {
+    getPost()
+  })
 
   const getPost = async () => {
     // imgList.value = []
     await axios
-      .get('http://localhost:8090/')
+      .post('http://localhost:8090/', { name: name.value })
       .then((res) => {
         // for (let i = 0; i < res.data.length; i++) {
         //   imgList.value.push(res.data[i])
@@ -60,7 +62,7 @@
   })
 </script>
 <template>
-  <div class="instagram">
+  <div class="instagram color-fafafa">
     <div class="bar row">
       <div class="logo col-4 row items-center">
         <svg aria-label="Instagram" class="_ab6-" color="#262626" fill="#262626" height="29" role="img" viewBox="32 4 113 32" width="103">
@@ -124,12 +126,12 @@
         </div>
       </div>
       <div class="column justify-center separator">
-        <q-tabs switch-indicator v-model="tab" class="color-fafafa text-black col row justify-center" narrow-indicator>
+        <q-tabs switch-indicator v-model="tab" class="color-fafafa text-black row justify-center" narrow-indicator>
           <q-tab class="col-1" name="posts" label="게시글" />
           <q-tab class="col-1" name="reels" label="릴스" />
           <q-tab class="col-1" name="write" label="글작성" />
         </q-tabs>
-        <q-tab-panels v-model="tab" animated class="color-fafafa text-center col padding-0-50px">
+        <q-tab-panels v-model="tab" animated class="color-fafafa text-center padding-0-50px">
           <q-tab-panel name="posts" class="">
             <div class="row q-col-gutter-md">
               <Post v-for="(item, index) in imgList" :key="index" :title="item.title" :context="item.context" :img="item.img" class="col-4"></Post>
