@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import Post from '../components/instagram/InstagramPost.vue'
   const tab = ref('posts')
@@ -10,31 +10,54 @@
   const clickSearch = () => {
     searchBar.value = !searchBar.value
   }
+  interface dataType {
+    title: string
+    context: string
+    img: string
+  }
+
+  //임시 로그인 아이디
+  const name = ref('angrymusic')
+  const imgList = ref<dataType[]>([])
+
   const upload = async () => {
     const data = new FormData()
+    data.append('name', name.value)
     data.append('title', title.value)
     data.append('context', context.value)
     data.append('file', file.value)
     console.log(file.value)
     await axios
-      .post(
-        'http://localhost:8090/add',
-        {
-          data: data,
+      .post('http://localhost:8090/add', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      )
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err)
+      })
+    tab.value = 'posts'
+    getPost()
+  }
+
+  const getPost = async () => {
+    // imgList.value = []
+    await axios
+      .get('http://localhost:8090/')
       .then((res) => {
-        console.log(res)
+        // for (let i = 0; i < res.data.length; i++) {
+        //   imgList.value.push(res.data[i])
+        // }
+        imgList.value = res.data
       })
       .catch((err) => {
         console.log(err)
       })
   }
+  onMounted(() => {
+    getPost()
+  })
 </script>
 <template>
   <div class="instagram">
@@ -109,7 +132,7 @@
         <q-tab-panels v-model="tab" animated class="color-fafafa text-center col padding-0-50px">
           <q-tab-panel name="posts" class="">
             <div class="row q-col-gutter-md">
-              <Post v-for="i in 9" :key="i" class="col-4"></Post>
+              <Post v-for="(item, index) in imgList" :key="index" :title="item.title" :context="item.context" :img="item.img" class="col-4"></Post>
             </div>
           </q-tab-panel>
 

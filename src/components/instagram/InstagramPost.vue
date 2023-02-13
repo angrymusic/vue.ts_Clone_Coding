@@ -1,18 +1,29 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   const overPost = ref(false)
+  const serverAddr = ref('http://localhost:8090/upload/')
+  const props = defineProps({
+    title: String,
+    context: String,
+    img: String,
+  })
   const mouseoverEvent = () => {
     overPost.value = true
   }
   const mouseoutEvent = () => {
     overPost.value = false
   }
+  onMounted(() => {
+    serverAddr.value += props.img
+  })
 </script>
 <template>
   <div @mouseover="mouseoverEvent()" @mouseout="mouseoutEvent()" class="container row items-center justify-center">
     <div v-show="overPost" class="blur-screen"></div>
-    <div v-show="overPost" class="post-info"><div class="col">❤ 352</div></div>
-    <img src="../../images/cat.png" />
+    <div v-show="overPost" class="post-info">
+      <div class="col">{{ props.title }}</div>
+    </div>
+    <img :src="serverAddr" />
   </div>
 </template>
 <style scoped>

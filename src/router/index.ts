@@ -12,7 +12,7 @@ const router = createRouter({
       component: MainLayout,
       children: [
         {
-          path: '',
+          path: '/',
           component: HomeView,
         },
         {
