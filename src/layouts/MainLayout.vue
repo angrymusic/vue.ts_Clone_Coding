@@ -30,10 +30,10 @@
         <q-item clickable v-ripple to="/instagram">
           <q-item-section>Instagram</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="/">
+        <q-item clickable v-ripple to="/youtube">
           <q-item-section>Youtube</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="/">
+        <q-item clickable v-ripple to="/apple">
           <q-item-section>Apple</q-item-section>
         </q-item>
       </q-list>
