@@ -40,7 +40,7 @@
         class="cursor-pointer"
         :style="{ display: overPost ? 'flex' : 'none' }"
       >
-        {{ props.title }}
+        ❤ 333 💬 25
       </div>
       <div class="delete-button cursor-pointer" @click="deletePost">⨉</div>
     </q-img>
