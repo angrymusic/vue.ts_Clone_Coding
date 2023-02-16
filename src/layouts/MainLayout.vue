@@ -1,14 +1,14 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
-  const leftDrawerOpen = ref(false)
+  import { ref } from 'vue';
+  const leftDrawerOpen = ref(false);
   const toggleLeftDrawer = () => {
-    leftDrawerOpen.value = !leftDrawerOpen.value
-  }
+    leftDrawerOpen.value = !leftDrawerOpen.value;
+  };
 </script>
 
 <template>
   <q-layout view="hHh LpR fff">
-    <q-header elevated class="text-white my-bg-color-10">
+    <q-header elevated class="text-white my-bg-color-0 z-index-999">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
@@ -21,7 +21,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="240">
       <!-- drawer content -->
       <q-list bordered separator>
         <q-item clickable v-ripple to="/">
@@ -52,4 +52,12 @@
       background-color: color.scale($mygrey, $lightness: $i * -5%);
     }
   }
+  // .z-index-999 {
+  //   position: fixed;
+  //   z-index: 999;
+  // }
+  // .z-index-1 {
+  //   position: relative;
+  //   z-index: 1;
+  // }
 </style>

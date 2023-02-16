@@ -16,6 +16,8 @@
     img: string;
   }
 
+  //useQuasar
+
   //임시 로그인 아이디
   const name = ref('angrymusic3');
 
