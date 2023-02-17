@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <q-layout view="hHh LpR fff">
+  <q-layout view="hHh LpR fff" class="no-shadow">
     <q-header elevated class="text-white my-bg-color-0 z-index-999">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
@@ -39,7 +39,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="z-index-1">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -52,12 +52,12 @@
       background-color: color.scale($mygrey, $lightness: $i * -5%);
     }
   }
-  // .z-index-999 {
-  //   position: fixed;
-  //   z-index: 999;
-  // }
-  // .z-index-1 {
-  //   position: relative;
-  //   z-index: 1;
-  // }
+  .z-index-999 {
+    position: fixed;
+    z-index: 999;
+  }
+  .z-index-1 {
+    position: relative;
+    z-index: 1;
+  }
 </style>
