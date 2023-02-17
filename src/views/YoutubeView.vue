@@ -39,6 +39,9 @@
       miniOnOff.value = true;
       exSize = q.screen.width;
     }
+    if (q.screen.width > 600) {
+      closeSearchBar();
+    }
   });
   const showSearchBar = () => {
     searchBar.value = true;
