@@ -39,7 +39,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container class="z-index-1">
+    <q-page-container class="z-index-999">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -53,10 +53,11 @@
     }
   }
   .z-index-999 {
-    position: fixed;
-    z-index: 999;
+    position: relative;
+    padding-top: 0px !important;
+    z-index: 1;
   }
-  .z-index-1 {
+  .z-index-9 {
     position: relative;
     z-index: 1;
   }

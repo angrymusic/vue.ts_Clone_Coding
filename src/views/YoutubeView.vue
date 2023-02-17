@@ -363,7 +363,16 @@
     </q-page-container>
   </q-layout>
 </template>
-
+<style lang="scss">
+  .q-drawer-container {
+    .fixed {
+      position: absolute !important;
+    }
+    .fullscreen {
+      position: absolute !important;
+    }
+  }
+</style>
 <style scoped>
   .youtube {
     font-family: 'Roboto', 'Arial', sans-serif;
@@ -395,6 +404,9 @@
     height: 34px;
     border-radius: 50px;
     color: #1c62b9;
+  }
+  .login-button:hover {
+    background-color: #b0daff;
   }
   .margin-0-auto {
     margin: 0 auto;

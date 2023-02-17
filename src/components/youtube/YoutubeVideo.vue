@@ -29,7 +29,7 @@
 <style scoped>
   .img {
     border-radius: 10px;
-    width: 25vw;
+    width: 20vw;
     min-width: 250px;
     overflow: hidden;
   }
