@@ -1,30 +1,29 @@
 <script setup lang="ts">
   import { ref, watch, onMounted } from 'vue';
-
+  const airPodsImage = ref('https://www.apple.com/105/media/us/airpods-pro/2022/d2deeb8e-83eb-48ea-9721-f567cf0fffa8/anim/hero/large/0000.png');
   onMounted(() => {
-    const main = document.querySelector<HTMLElement>('.main');
+    const main = document.querySelector<HTMLElement>('.section');
     if (main) {
-      main.style.height = `${window.innerHeight * 5}px`;
+      main.style.height = `${window.innerHeight + 3200}px`;
     }
   });
 
   const preOffsetY = window.scrollY;
-  //   window.addEventListener('scroll', () => {
-  //     console.log(window.scrollY);
-  //   });
-  watch(
-    () => window.scrollY,
-    () => {
-      console.log('hi');
-    }
-  );
+  let imgNum: number;
+  let strImgNum: string;
   const scrollHandler = () => {
-    console.log(window.scrollY);
+    imgNum = Math.floor(window.scrollY / 100) * 2;
+    if (imgNum > 64) imgNum = 64;
+    if (imgNum < 10) strImgNum = '0' + imgNum;
+    else strImgNum = imgNum.toString();
+    console.log(strImgNum);
+    airPodsImage.value =
+      'https://www.apple.com/105/media/us/airpods-pro/2022/d2deeb8e-83eb-48ea-9721-f567cf0fffa8/anim/hero/large/00' + strImgNum + '.png';
   };
 </script>
 
 <template>
-  <div class="column apple" @scroll="scrollHandler">
+  <div class="column apple" v-scroll="scrollHandler">
     <div class="row top-bar items-center" :class="{ 'width-980': $q.screen.width > 980 }">
       <svg class="bar-item q-ml-none" height="44" fill="white" viewBox="0 0 14 44" width="14" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -59,17 +58,42 @@
     </div>
     <div class="main">
       <div class="section">
+        <img :src="airPodsImage" class="sticky-airpods flex self-center" />
+        <div class="sticky-desc">완전히 새로운</div>
+        <div class="big-name">AirPods Pro</div>
         <!-- 0~64 -->
-        <q-img
-          src="https://www.apple.com/105/media/us/airpods-pro/2022/d2deeb8e-83eb-48ea-9721-f567cf0fffa8/anim/hero/large/0000.png"
-          class="flex self-center"
-          :class="{ 'width-980': $q.screen.width > 980 }"
-        ></q-img>
       </div>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
+  .section {
+  }
+  .sticky-desc {
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    top: 900px;
+    font-size: 29px;
+    font-weight: 600;
+    color: #00ff41;
+    transform: translateY(-600px);
+  }
+  .big-name {
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    top: 700px;
+    font-weight: 700;
+    font-size: 14.6vw;
+    transform: translateY(-400px);
+  }
+  .sticky-airpods {
+    z-index: 1;
+    width: 100%;
+    position: sticky;
+    top: -10px;
+  }
   .apple {
     background-color: black;
     color: white;
@@ -86,6 +110,7 @@
   }
   .sticky-bar {
     position: sticky;
+    top: 0px;
     height: 52px;
     border-bottom: solid 1px #ffffff3d;
   }

@@ -465,7 +465,6 @@
           >
             뉴스
           </div>
-          <!-- <div class="col"></div> -->
           <q-space></q-space>
           <div class="q-mr-md"><q-toggle v-model="darkMode" label="다크 모드" /></div>
         </div>
