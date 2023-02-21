@@ -19,10 +19,9 @@
     }
   };
   const q = useQuasar();
-  watch(darkMode,()=>{
+  watch(darkMode, () => {
     q.dark.toggle();
-
-  })
+  });
   const toggleLeftDrawer = () => {
     if (q.screen.gt.xs) {
       leftDrawerOpen.value = true;
@@ -36,26 +35,29 @@
   };
   let exSize = q.screen.width;
   // window.addEventListener('resize', () => {
-   
+
   // });
-  watch(()=>q.screen.width,()=>{
-    console.log("now width : "+q.screen.width);
-    console.log("ex width : " + exSize);
-    console.log(q.screen.lt.sm);
-    if (q.screen.gt.sm && q.screen.width > exSize) {
-      miniOnOff.value = false;
-      exSize = q.screen.width;
-      console.log('minioff');
+  watch(
+    () => q.screen.width,
+    () => {
+      console.log('now width : ' + q.screen.width);
+      console.log('ex width : ' + exSize);
+      console.log(q.screen.lt.sm);
+      if (q.screen.gt.sm && q.screen.width > exSize) {
+        miniOnOff.value = false;
+        exSize = q.screen.width;
+        console.log('minioff');
+      }
+      if (q.screen.lt.md && q.screen.width < exSize) {
+        miniOnOff.value = true;
+        exSize = q.screen.width;
+        console.log('minion');
+      }
+      if (q.screen.lt.sm) {
+        closeSearchBar();
+      }
     }
-    if (q.screen.lt.md && q.screen.width < exSize) {
-      miniOnOff.value = true;
-      exSize = q.screen.width;
-      console.log('minion');
-    }
-    if (q.screen.lt.sm) {
-      closeSearchBar();
-    }
-  })
+  );
   const showSearchBar = () => {
     searchBar.value = true;
   };
@@ -141,17 +143,10 @@
 <template>
   <q-layout class="no-shadow youtube">
     <q-header class="bg-white">
-      <q-toolbar v-if="searchBar" class="row" :class="{'dark-mode'
-      :$q.dark.isActive}">
+      <q-toolbar v-if="searchBar" class="row" :class="{ 'dark-mode': $q.dark.isActive }">
         <div class="voice-button button flex flex-center" @click="closeSearchBar">
           <div class="icon">
-            <svg
-              viewBox="0 0 24 24"
-              preserveAspectRatio="xMidYMid meet"
-              focusable="false"
-              :class="{'dark-svg':$q.dark.isActive}"
-              style=""
-            >
+            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" :class="{ 'dark-svg': $q.dark.isActive }" style="">
               <g mirror-in-rtl="" class="style-scope yt-icon">
                 <path d="M21,11v1H5.64l6.72,6.72l-0.71,0.71L3.72,11.5l7.92-7.92l0.71,0.71L5.64,11H21z" class="style-scope yt-icon"></path>
               </g>
@@ -161,7 +156,15 @@
 
         <div class="col row">
           <div class="search-bar col row items-center" :class="{ 'border-blue': clicked, 'border-gray': !clicked }">
-            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="button2 translateY" :class="{'dark-svg':$q.dark.isActive}" v-if="clicked" style="">
+            <svg
+              viewBox="0 0 24 24"
+              preserveAspectRatio="xMidYMid meet"
+              focusable="false"
+              class="button2 translateY"
+              :class="{ 'dark-svg': $q.dark.isActive }"
+              v-if="clicked"
+              style=""
+            >
               <g>
                 <path
                   d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"
@@ -169,11 +172,24 @@
                 ></path>
               </g>
             </svg>
-            <input @focusin="clickSearch(true)" @focusout="clickSearch(false)" class="search-box col" :class="{'dark-font':$q.dark.isActive}" placeholder="검색" />
+            <input
+              @focusin="clickSearch(true)"
+              @focusout="clickSearch(false)"
+              class="search-box col"
+              :class="{ 'dark-font': $q.dark.isActive }"
+              placeholder="검색"
+            />
           </div>
 
-          <div class="search-button row items-center" :class="{'dark-bg':$q.dark.isActive}">
-            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="q-mr-md icon translateY" :class="{'dark-svg':$q.dark.isActive}" style="">
+          <div class="search-button row items-center" :class="{ 'dark-bg': $q.dark.isActive }">
+            <svg
+              viewBox="0 0 24 24"
+              preserveAspectRatio="xMidYMid meet"
+              focusable="false"
+              class="q-mr-md icon translateY"
+              :class="{ 'dark-svg': $q.dark.isActive }"
+              style=""
+            >
               <g>
                 <path
                   d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"
@@ -196,8 +212,16 @@
           </div>
         </div>
       </q-toolbar>
-      <q-toolbar v-if="!searchBar" class="" :class="{'dark-mode':$q.dark.isActive}">
-        <q-btn :class="{'dark-svg':$q.dark.isActive, 'dark-hover': $q.dark.isActive}" dense flat round icon="menu" color="black" @click="toggleLeftDrawer" />
+      <q-toolbar v-if="!searchBar" class="" :class="{ 'dark-mode': $q.dark.isActive }">
+        <q-btn
+          :class="{ 'dark-svg': $q.dark.isActive, 'dark-hover': $q.dark.isActive }"
+          dense
+          flat
+          round
+          icon="menu"
+          color="black"
+          @click="toggleLeftDrawer"
+        />
 
         <q-toolbar-title class="row items-center">
           <q-img v-if="!$q.dark.isActive" src="../assets/youtubelogo.svg" width="90px" />
@@ -206,7 +230,14 @@
           <div class="col row justify-end" v-if="$q.screen.width <= 670">
             <div class="voice-button button flex flex-center" @click="showSearchBar">
               <div class="icon">
-                <svg viewBox="0 0 24 24" :class="{'dark-svg':$q.dark.isActive}" preserveAspectRatio="xMidYMid meet" focusable="false" class="q-mr-md icon translateY" style="">
+                <svg
+                  viewBox="0 0 24 24"
+                  :class="{ 'dark-svg': $q.dark.isActive }"
+                  preserveAspectRatio="xMidYMid meet"
+                  focusable="false"
+                  class="q-mr-md icon translateY"
+                  style=""
+                >
                   <g>
                     <path
                       d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"
@@ -219,7 +250,7 @@
 
             <div class="voice-button button flex flex-center">
               <div class="icon">
-                <svg viewBox="0 0 24 24" :class="{'dark-svg':$q.dark.isActive}" preserveAspectRatio="xMidYMid meet" focusable="false" class="">
+                <svg viewBox="0 0 24 24" :class="{ 'dark-svg': $q.dark.isActive }" preserveAspectRatio="xMidYMid meet" focusable="false" class="">
                   <g class="">
                     <path
                       d="M12 3C10.34 3 9 4.37 9 6.07V11.93C9 13.63 10.34 15 12 15C13.66 15 15 13.63 15 11.93V6.07C15 4.37 13.66 3 12 3ZM18.5 12H17.5C17.5 15.03 15.03 17.5 12 17.5C8.97 17.5 6.5 15.03 6.5 12H5.5C5.5 15.24 7.89 17.93 11 18.41V21H13V18.41C16.11 17.93 18.5 15.24 18.5 12Z"
@@ -232,7 +263,15 @@
           </div>
           <div class="col-auto row items-center margin-0-auto" v-if="$q.screen.width > 670">
             <div class="search-bar col-auto row items-center" :class="{ 'border-blue': clicked, 'border-gray': !clicked }">
-              <svg viewBox="0 0 24 24" :class="{'dark-svg':$q.dark.isActive}" preserveAspectRatio="xMidYMid meet" focusable="false" class="button2 translateY" v-if="clicked" style="">
+              <svg
+                viewBox="0 0 24 24"
+                :class="{ 'dark-svg': $q.dark.isActive }"
+                preserveAspectRatio="xMidYMid meet"
+                focusable="false"
+                class="button2 translateY"
+                v-if="clicked"
+                style=""
+              >
                 <g>
                   <path
                     d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"
@@ -240,11 +279,24 @@
                   ></path>
                 </g>
               </svg>
-              <input @focusin="clickSearch(true)" @focusout="clickSearch(false)" class="search-box" :class="{'dark-font':$q.dark.isActive}" placeholder="검색" />
+              <input
+                @focusin="clickSearch(true)"
+                @focusout="clickSearch(false)"
+                class="search-box"
+                :class="{ 'dark-font': $q.dark.isActive }"
+                placeholder="검색"
+              />
             </div>
 
-            <div class="search-button row items-center" :class="{'dark-bg':$q.dark.isActive}">
-              <svg viewBox="0 0 24 24" :class="{'dark-svg':$q.dark.isActive}" preserveAspectRatio="xMidYMid meet" focusable="false" class="q-mr-md icon translateY" style="">
+            <div class="search-button row items-center" :class="{ 'dark-bg': $q.dark.isActive }">
+              <svg
+                viewBox="0 0 24 24"
+                :class="{ 'dark-svg': $q.dark.isActive }"
+                preserveAspectRatio="xMidYMid meet"
+                focusable="false"
+                class="q-mr-md icon translateY"
+                style=""
+              >
                 <g>
                   <path
                     d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"
@@ -254,9 +306,9 @@
               </svg>
             </div>
 
-            <div class="voice-button button row items-center justify-center" :class="{'dark-hover': $q.dark.isActive}">
+            <div class="voice-button button row items-center justify-center" :class="{ 'dark-hover': $q.dark.isActive }">
               <div class="icon">
-                <svg viewBox="0 0 24 24" :class="{'dark-svg':$q.dark.isActive}" preserveAspectRatio="xMidYMid meet" focusable="false" class="">
+                <svg viewBox="0 0 24 24" :class="{ 'dark-svg': $q.dark.isActive }" preserveAspectRatio="xMidYMid meet" focusable="false" class="">
                   <g class="">
                     <path
                       d="M12 3C10.34 3 9 4.37 9 6.07V11.93C9 13.63 10.34 15 12 15C13.66 15 15 13.63 15 11.93V6.07C15 4.37 13.66 3 12 3ZM18.5 12H17.5C17.5 15.03 15.03 17.5 12 17.5C8.97 17.5 6.5 15.03 6.5 12H5.5C5.5 15.24 7.89 17.93 11 18.41V21H13V18.41C16.11 17.93 18.5 15.24 18.5 12Z"
@@ -270,7 +322,7 @@
 
           <div class="voice-button button flex flex-center">
             <div class="icon">
-              <svg viewBox="0 0 24 24" :class="{'dark-svg':$q.dark.isActive}" preserveAspectRatio="xMidYMid meet" focusable="false" style="">
+              <svg viewBox="0 0 24 24" :class="{ 'dark-svg': $q.dark.isActive }" preserveAspectRatio="xMidYMid meet" focusable="false" style="">
                 <g class="style-scope yt-icon">
                   <path
                     d="M12,16.5c0.83,0,1.5,0.67,1.5,1.5s-0.67,1.5-1.5,1.5s-1.5-0.67-1.5-1.5S11.17,16.5,12,16.5z M10.5,12 c0,0.83,0.67,1.5,1.5,1.5s1.5-0.67,1.5-1.5s-0.67-1.5-1.5-1.5S10.5,11.17,10.5,12z M10.5,6c0,0.83,0.67,1.5,1.5,1.5 s1.5-0.67,1.5-1.5S12.83,4.5,12,4.5S10.5,5.17,10.5,6z"
@@ -281,7 +333,7 @@
             </div>
           </div>
           <div class="login-button row items-center border-gray">
-            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="icon" style="fill:#1c62b9">
+            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="icon" style="fill: #1c62b9">
               <g class="style-scope yt-icon">
                 <path
                   d="M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10s10-4.48,10-10C22,6.48,17.52,2,12,2z M12,3c4.96,0,9,4.04,9,9 c0,1.42-0.34,2.76-0.93,3.96c-1.53-1.72-3.98-2.89-7.38-3.03C14.57,12.6,16,10.97,16,9c0-2.21-1.79-4-4-4C9.79,5,8,6.79,8,9 c0,1.97,1.43,3.6,3.31,3.93c-3.4,0.14-5.85,1.31-7.38,3.03C3.34,14.76,3,13.42,3,12C3,7.04,7.04,3,12,3z M9,9c0-1.65,1.35-3,3-3 s3,1.35,3,3c0,1.65-1.35,3-3,3S9,10.65,9,9z M12,21c-3.16,0-5.94-1.64-7.55-4.12C6.01,14.93,8.61,13.9,12,13.9 c3.39,0,5.99,1.03,7.55,2.98C17.94,19.36,15.16,21,12,21z"
@@ -295,9 +347,18 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer :breakpoint="$q.screen.sizes.sm" :overlay="false" class="absolute" show-if-above v-model="leftDrawerOpen" side="left" :width="240" :mini="miniOnOff">
+    <q-drawer
+      :breakpoint="$q.screen.sizes.sm"
+      :overlay="false"
+      class="absolute"
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      :width="240"
+      :mini="miniOnOff"
+    >
       <div v-if="$q.screen.lt.sm" class="height-50 row items-center">
-        <q-btn :class="{'dark-svg':$q.dark.isActive}" flat round icon="menu" class="q-mr-md q-ml-sm" color="black" @click="toggleLeftDrawer" />
+        <q-btn :class="{ 'dark-svg': $q.dark.isActive }" flat round icon="menu" class="q-mr-md q-ml-sm" color="black" @click="toggleLeftDrawer" />
         <q-img v-if="!$q.dark.isActive" src="../assets/youtubelogo.svg" width="90px" />
         <q-img v-if="$q.dark.isActive" src="../assets/youtubelogowhite.svg" width="90px" />
       </div>
@@ -358,18 +419,58 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="q-ml-lg q-mt-md">
+      <div class="q-mx-lg q-mt-md">
         <div class="categories row">
-          <div class="category" :class="{'dark-bg':$q.dark.isActive, 'selected-category':category=='all', 'dark-selected-category':category=='all'&&$q.dark.isActive}"  @click="selectCategory('all')">전체</div>
-          <div class="category" :class="{'dark-bg':$q.dark.isActive, 'selected-category':category=='music', 'dark-selected-category':category=='music'&&$q.dark.isActive}" @click="selectCategory('music')">음악</div>
-          <div class="category" :class="{'dark-bg':$q.dark.isActive, 'selected-category':category=='game', 'dark-selected-category':category=='game'&&$q.dark.isActive}" @click="selectCategory('game')">게임</div>
-          <div class="category" :class="{'dark-bg':$q.dark.isActive, 'selected-category':category=='news', 'dark-selected-category':category=='news'&&$q.dark.isActive}" @click="selectCategory('news')">뉴스</div>
-          <div class="col"></div>
-          <div class="q-mr-md"><q-toggle v-model="darkMode" label="다크 모드"/></div>
+          <div
+            class="category"
+            :class="{
+              'dark-bg': $q.dark.isActive,
+              'selected-category': category == 'all',
+              'dark-selected-category': category == 'all' && $q.dark.isActive,
+            }"
+            @click="selectCategory('all')"
+          >
+            전체
+          </div>
+          <div
+            class="category"
+            :class="{
+              'dark-bg': $q.dark.isActive,
+              'selected-category': category == 'music',
+              'dark-selected-category': category == 'music' && $q.dark.isActive,
+            }"
+            @click="selectCategory('music')"
+          >
+            음악
+          </div>
+          <div
+            class="category"
+            :class="{
+              'dark-bg': $q.dark.isActive,
+              'selected-category': category == 'game',
+              'dark-selected-category': category == 'game' && $q.dark.isActive,
+            }"
+            @click="selectCategory('game')"
+          >
+            게임
+          </div>
+          <div
+            class="category"
+            :class="{
+              'dark-bg': $q.dark.isActive,
+              'selected-category': category == 'news',
+              'dark-selected-category': category == 'news' && $q.dark.isActive,
+            }"
+            @click="selectCategory('news')"
+          >
+            뉴스
+          </div>
+          <!-- <div class="col"></div> -->
+          <q-space></q-space>
+          <div class="q-mr-md"><q-toggle v-model="darkMode" label="다크 모드" /></div>
         </div>
         <div class="row q-mt-xs" :class="{ 'q-col-gutter-xs': $q.screen.lt.md, 'q-col-gutter-md': $q.screen.gt.sm }">
           <YoutubeVideo
-            class="col-auto"
             v-for="(item, index) in videoList.filter((e) => {
               if (categoryAll) {
                 return true;
@@ -400,20 +501,20 @@
   }
 </style>
 <style scoped>
-.dark-border{
-  border-color: #ffffff14 !important;
-}
-.dark-bg{
-  background-color: #303030 !important;
-}
-.dark-svg{
-  color: white !important;
-  fill: white !important;
-}
+  .dark-border {
+    border-color: #ffffff14 !important;
+  }
+  .dark-bg {
+    background-color: #303030 !important;
+  }
+  .dark-svg {
+    color: white !important;
+    fill: white !important;
+  }
 
-.dark-mode{
-  background-color: black !important;
-}
+  .dark-mode {
+    background-color: black !important;
+  }
   .youtube {
     font-family: 'Roboto', 'Arial', sans-serif;
   }
@@ -447,9 +548,9 @@
   }
   .dark-selected-category:hover {
     background-color: white !important;
-    color:black;
+    color: black;
   }
-  .dark-font{
+  .dark-font {
     color: white;
   }
   .login-button {

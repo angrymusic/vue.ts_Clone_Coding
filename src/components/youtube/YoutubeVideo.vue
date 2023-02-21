@@ -10,10 +10,9 @@
   });
 </script>
 <template>
-  <div class="column">
-    <div class="col-auto img q-mb-sm">
-      <q-img :ratio="16 / 9" :src="props.img" alt="" />
-    </div>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <q-img class="img q-mb-sm" :ratio="16 / 9" :src="props.img" alt="" />
+
     <div class="row">
       <q-avatar class="q-mr-sm" size="36px">
         <img src="/src/assets/heongmin.jpg" alt="" />
@@ -29,9 +28,6 @@
 <style scoped>
   .img {
     border-radius: 10px;
-    width: 20vw;
-    min-width: 250px;
-    overflow: hidden;
   }
   .profile {
     width: 36px;
