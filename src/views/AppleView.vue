@@ -1,11 +1,14 @@
 <script setup lang="ts">
-  import { ref, watch, onMounted } from 'vue';
+  import { ref, onMounted } from 'vue';
   const airPodsImage = ref('https://www.apple.com/105/media/us/airpods-pro/2022/d2deeb8e-83eb-48ea-9721-f567cf0fffa8/anim/hero/large/0000.png');
+
+  let stickyDesc: HTMLElement | null;
   onMounted(() => {
     const main = document.querySelector<HTMLElement>('.section');
     if (main) {
-      main.style.height = `${window.innerHeight + 3200}px`;
+      main.style.height = `${window.innerHeight + 3100}px`;
     }
+    stickyDesc = document.querySelector('.sticky');
   });
 
   const preOffsetY = window.scrollY;
@@ -15,10 +18,20 @@
     imgNum = Math.floor(window.scrollY / 100) * 2;
     if (imgNum > 64) imgNum = 64;
     if (imgNum < 10) strImgNum = '0' + imgNum;
+    //에어팟 이미지 번호 처리
     else strImgNum = imgNum.toString();
     console.log(strImgNum);
     airPodsImage.value =
       'https://www.apple.com/105/media/us/airpods-pro/2022/d2deeb8e-83eb-48ea-9721-f567cf0fffa8/anim/hero/large/00' + strImgNum + '.png';
+    if (stickyDesc) {
+      if (imgNum < 40) {
+        stickyDesc.style.opacity = '1';
+      } else if (imgNum >= 40 && imgNum <= 60) {
+        stickyDesc.style.opacity = (imgNum / 20) * -1 + 3 + '';
+      } else {
+        stickyDesc.style.opacity = '0';
+      }
+    }
   };
 </script>
 
@@ -47,7 +60,6 @@
         ></path>
       </svg>
     </div>
-
     <div class="row sticky-bar items-center" :class="{ 'width-980': $q.screen.width > 980 }">
       <div class="name">AirPods Pro(2세대)</div>
       <div class="col"></div>
@@ -59,8 +71,11 @@
     <div class="main">
       <div class="section">
         <img :src="airPodsImage" class="sticky-airpods flex self-center" />
-        <div class="sticky-desc">완전히 새로운</div>
-        <div class="big-name">AirPods Pro</div>
+        <div class="sticky">
+          <div class="sticky-desc">완전히 새로운</div>
+          <div class="big-name">AirPods Pro</div>
+        </div>
+
         <!-- 0~64 -->
       </div>
     </div>
@@ -68,32 +83,42 @@
 </template>
 <style scoped lang="scss">
   .section {
+    // transform: translateY(-300px);
+    @keyframes smooth {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    animation: smooth 1s;
+    .sticky {
+      position: sticky;
+      top: 1130px;
+    }
+    .sticky-desc {
+      text-align: center;
+      font-size: 29px;
+      font-weight: 600;
+      color: #00ff41;
+      transform: translateY(-600px);
+    }
+    .big-name {
+      display: flex;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14.6vw;
+      transform: translateY(-600px);
+    }
+    .sticky-airpods {
+      z-index: 1;
+      width: 100%;
+      position: sticky;
+      top: 100px;
+    }
   }
-  .sticky-desc {
-    position: sticky;
-    display: flex;
-    justify-content: center;
-    top: 900px;
-    font-size: 29px;
-    font-weight: 600;
-    color: #00ff41;
-    transform: translateY(-600px);
-  }
-  .big-name {
-    position: sticky;
-    display: flex;
-    justify-content: center;
-    top: 700px;
-    font-weight: 700;
-    font-size: 14.6vw;
-    transform: translateY(-400px);
-  }
-  .sticky-airpods {
-    z-index: 1;
-    width: 100%;
-    position: sticky;
-    top: -10px;
-  }
+
   .apple {
     background-color: black;
     color: white;
@@ -103,6 +128,7 @@
   .top-bar {
     height: 44px;
     justify-content: space-between;
+    padding: 0 20px;
   }
   .width-980 {
     width: 980px;
@@ -111,6 +137,7 @@
   .sticky-bar {
     position: sticky;
     top: 0px;
+    padding: 0 20px;
     height: 52px;
     border-bottom: solid 1px #ffffff3d;
   }
