@@ -47,7 +47,7 @@
               <div v-show="hoverProfile" class="absolute-full row items-center font-size-12">
                 <div class="">👨‍💻 이민재</div>
                 <div class="col-12">👶 99.05.12</div>
-                <div>😍 노래, 풋살, 고기</div>
+                <div class="col-12">😍 노래, 풋살, 고기</div>
                 <div>😫 미세먼지</div>
               </div>
             </q-img>
