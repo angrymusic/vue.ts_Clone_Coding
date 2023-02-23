@@ -21,7 +21,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="240">
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="240" :breakpoint="$q.screen.sizes.lg">
       <!-- drawer content -->
       <q-list bordered separator>
         <q-item clickable v-ripple to="/">
