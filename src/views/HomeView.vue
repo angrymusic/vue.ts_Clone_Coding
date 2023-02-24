@@ -1,14 +1,18 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import axios from 'axios';
-
+  import { useQuasar } from 'quasar';
+  const q = useQuasar();
   const hoverProfile = ref(false);
   const typingEnd = ref(false);
   const todayInfo = ref('');
   const headline = ref('');
   const weather = ref('');
   const visits = ref(0);
+  const drawOn = ref(false);
+  const drawAlert = ref(false);
 
+  //profile 사진 마우스 hover
   const mouseProfile = (bool: boolean) => {
     hoverProfile.value = bool;
   };
@@ -27,7 +31,12 @@
     }, 80);
   };
 
-  //오늘 날짜
+  const drawToggle = () => {
+    drawOn.value = true;
+    drawAlert.value = true;
+  };
+
+  //오늘 날짜 계산
   const getDay = () => {
     const today = new Date();
     const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -65,7 +74,87 @@
     //   })
     //   .catch((err) => {
     //     console.log("can't get weather");
+    //     weather.value = '☀ 맑음'
     //   });
+  };
+  let canvas: HTMLCanvasElement;
+  watch(
+    () => q.screen.width * q.screen.height,
+    () => {
+      canvas.width = document.body.clientWidth;
+      canvas.height = document.body.clientHeight;
+    }
+  );
+  watch(drawOn, () => {
+    canvas.width = document.body.clientWidth;
+    canvas.height = document.body.clientHeight;
+  });
+  let pos = {
+    drawable: false,
+    x: -1,
+    y: -1,
+  };
+  const setCanvas = () => {
+    canvas = <HTMLCanvasElement>document.getElementById('canvas');
+    if (canvas) {
+      canvas.width = document.body.clientWidth;
+      canvas.height = document.body.clientHeight;
+    }
+    const ctx = canvas?.getContext('2d');
+
+    const rect = canvas?.getBoundingClientRect(); // 터치 스크린
+    const drawStart = (e: any) => {
+      if (ctx) {
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+      }
+      pos.drawable = true;
+      ctx?.beginPath();
+      pos.x = e.offsetX;
+      pos.y = e.offsetY;
+      ctx?.moveTo(pos.x, pos.y);
+    };
+    const touchStart = (e: any) => {
+      pos.drawable = true;
+      ctx?.beginPath();
+      pos.x = e.touches[0].pageX - rect.left;
+      pos.y = e.touches[0].pageY - rect.top;
+      ctx?.moveTo(pos.x, pos.y);
+    };
+    const draw = (e: any) => {
+      if (!pos.drawable) return;
+      ctx?.lineTo(e.offsetX, e.offsetY);
+      pos.x = e.offsetX;
+      pos.y = e.offsetY;
+      ctx?.stroke();
+    };
+    const touch = (e: any) => {
+      ctx?.lineTo(e.touches[0].pageX - rect.left, e.touches[0].pageY - rect.top);
+      pos.x = e.touches[0].pageX - rect.left;
+      pos.y = e.touches[0].pageY - rect.top;
+      ctx?.stroke();
+    };
+    const drawEnd = () => {
+      pos.drawable = false;
+      pos.x = -1;
+      pos.y = -1;
+    };
+
+    const exitCanvas = (e: any) => {
+      drawOn.value = false;
+    };
+
+    canvas.addEventListener('mousedown', drawStart);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', drawEnd);
+    canvas.addEventListener('mouseout', drawEnd);
+    document.addEventListener('keydown', exitCanvas);
+
+    /// 터치 스크린
+    canvas.addEventListener('touchstart', touchStart);
+    canvas.addEventListener('touchmove', touch);
+    canvas.addEventListener('touchend', drawEnd);
   };
 
   onMounted(() => {
@@ -73,11 +162,25 @@
     getWeather();
     getDay();
     typing();
+    setCanvas();
   });
 </script>
 
 <template>
   <div id="container">
+    <q-dialog v-model="drawAlert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">낙서를 그만두시려면 ESC를 눌러주세요!</div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <canvas v-show="drawOn" id="canvas"></canvas>
+    <div id="pencil" v-if="!drawOn && typingEnd" @click="drawToggle"><img src="../assets/home/pencil.svg" width="150" alt="" /></div>
     <div id="bg">
       <div id="header" class="row" :class="{ 'q-py-sm': !$q.screen.lt.md }">
         <div id="header-left" class="col-xs-12 col-sm-12 col-md-3 row" :class="{ 'q-pt-xs': $q.screen.lt.md }">
@@ -135,7 +238,7 @@
             <span id="typing-text" v-html="headline"></span>
             <span id="cursor" :class="{ 'blink-animation': typingEnd }">|</span>
           </div>
-
+          <q-spinner-comment v-if="!typingEnd" color="black" size="100px" class="q-mt-sm q-ml-lg q-pl-lg" />
           <div v-if="typingEnd" id="body-center-content">
             <div class="font-bold subtitle">본인 소개 먼저 해주실까요?</div>
             <p>안녕하세요 저는 프론트엔드 직군으로 시작한 신입 개발자 이민재라고 합니다.</p>
@@ -145,7 +248,7 @@
               나만의 무언가를 만들어낸다는 것 만큼 재밌고 자극적인 것은 없다고 생각합니다. 그리고 만든 것을 바로 눈으로 볼 수 있다면 더 재밌어질
               것입니다.<br />
               그래서 저는 웹 프론트엔드 개발자가 되기로 결심했습니다. 결과를 바로 볼 수도 있고 많은 사람들에게 쉽게 노출될 수 있습니다. 그만큼 중요한
-              역할이 될 것이고 돌아오는 보람과 뿌듯함도 크다고 생각하기 때문입니다.
+              역할이 될 것이고 돌아오는 보람과 성취감도 크다고 생각하기 때문입니다.
             </p>
             <div class="font-bold subtitle">현재는 어떤 일을 하고 계신가요?</div>
             <p>학교에서 하는 일학습병행에 참가하여 회사 실무자분께 좋은 팁들을 전수 받으며 vue.js를 중점으로 배우고 있습니다.</p>
@@ -171,10 +274,18 @@
           </div>
         </div>
 
-        <div id="body-right" v-if="!$q.screen.lt.md" class="col-2 q-mt-md"></div>
+        <div id="body-right" v-if="!$q.screen.lt.md" class="col-2 q-mt-md q-pl-md">
+          <q-timeline color="#2d2c25">
+            <q-timeline-entry subtitle="1999년 5월 12일 탄생"> 👶 세상에 등장 </q-timeline-entry>
+            <q-timeline-entry subtitle="2006년 ~ 2011년 초등"> 🤩 레고 사랑꾼 </q-timeline-entry>
+            <q-timeline-entry subtitle="2012년 ~ 2014년 중등"> 👨‍👦‍👦 친구 좋아 </q-timeline-entry>
+            <q-timeline-entry subtitle="2015년 ~ 2017년 고등"> ✍ 대학 가자 </q-timeline-entry>
+            <q-timeline-entry subtitle="2019년 ~ 2021년 군대"> 👨‍🦲 내 머리.. </q-timeline-entry>
+            <q-timeline-entry subtitle="2018년 ~ 대학"> 👨‍💻 내가 바로 개발자 </q-timeline-entry>
+          </q-timeline>
+        </div>
       </div>
-
-      <div id="footer" class="flex flex-center q-mt-md">projects</div>
+      <div v-if="typingEnd" id="footer" class="flex flex-center q-mt-md">projects</div>
     </div>
   </div>
 </template>
@@ -224,10 +335,35 @@
       opacity: 1;
     }
   }
+  @keyframes right-to-left-animation {
+    0% {
+      transform: translateX(40px);
+    }
+    100% {
+      transform: translateX(0px);
+    }
+  }
+  #pencil {
+    cursor: pointer;
+    position: absolute;
+    transform: rotate(-30deg);
+    top: 150px;
+    right: -10px;
+    animation: right-to-left-animation 2s;
+  }
+  #canvas {
+    z-index: 2;
+    position: absolute;
+  }
   #container {
+    overflow: hidden;
     width: 100%;
     height: 100%;
     background-color: #e2e0d7;
+    position: relative;
+
+    font-family: 'Chosun-light', serif;
+    font-size: 14px;
   }
   #bg {
     width: 100%;
@@ -235,8 +371,6 @@
     min-height: 100vh;
     padding: 10px 5vw;
     margin: 0 auto;
-    font-family: 'Chosun-light', serif;
-    font-size: 14px;
   }
   #header {
     border-bottom: double 3px;
