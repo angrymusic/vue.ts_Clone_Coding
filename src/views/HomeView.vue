@@ -2,6 +2,7 @@
   import { ref, onMounted, watch } from 'vue';
   import axios from 'axios';
   import { useQuasar } from 'quasar';
+
   const q = useQuasar();
   const hoverProfile = ref(false);
   const typingEnd = ref(false);
@@ -11,6 +12,8 @@
   const visits = ref(0);
   const drawOn = ref(false);
   const drawAlert = ref(false);
+  const slide = ref(1);
+  const fullscreen = ref(false);
 
   //profile 사진 마우스 hover
   const mouseProfile = (bool: boolean) => {
@@ -285,7 +288,28 @@
           </q-timeline>
         </div>
       </div>
-      <div v-if="typingEnd" id="footer" class="flex flex-center q-mt-md">projects</div>
+      <div v-if="typingEnd" id="footer" class="q-mt-md">
+        <q-carousel swipeable animated arrows control-color="black" v-model="slide" v-model:fullscreen="fullscreen" infinite>
+          <q-carousel-slide :name="1">첫번째<br />asd</q-carousel-slide>
+          <q-carousel-slide :name="2">두번째</q-carousel-slide>
+          <q-carousel-slide :name="3">세번째</q-carousel-slide>
+          <q-carousel-slide :name="4">네번째</q-carousel-slide>
+
+          <template v-slot:control>
+            <q-carousel-control position="bottom-right" :offset="[18, 18]">
+              <q-btn
+                push
+                round
+                dense
+                color="black"
+                text-color="white"
+                :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
+                @click="fullscreen = !fullscreen"
+              />
+            </q-carousel-control>
+          </template>
+        </q-carousel>
+      </div>
     </div>
   </div>
 </template>
