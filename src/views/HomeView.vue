@@ -170,13 +170,13 @@
     {
       title: 'vue.js 인스타 클론 코딩',
       language: 'vue.js',
-      context: 'vue.js.를 사용해서 인스타그램을 클론코딩을 하였습니다.',
+      context: 'vue.js를 사용해서 인스타그램을 클론코딩을 하였습니다.',
       img: 'https://cdn.pixabay.com/photo/2016/11/30/20/58/programming-1873854__340.png',
     },
     {
       title: 'vue.js 유튜브 클론 코딩',
       language: 'vue.js',
-      context: 'vue.js.를 사용해서 유튜브를 클론코딩을 하였습니다.',
+      context: 'vue.js를 사용해서 유튜브를 클론코딩을 하였습니다.',
       img: 'https://cdn.pixabay.com/photo/2016/11/30/20/58/programming-1873854__340.png',
     },
     {
@@ -210,7 +210,6 @@
       </q-card>
     </q-dialog>
     <canvas v-show="drawOn" id="canvas"></canvas>
-    <div id="pencil" v-if="!drawOn && typingEnd" @click="drawToggle"><img src="../assets/home/pencil.svg" width="150" alt="" /></div>
     <div id="bg">
       <div id="header" class="row" :class="{ 'q-py-sm': !$q.screen.lt.md }">
         <div id="header-left" class="col-xs-12 col-sm-12 col-md-3 row" :class="{ 'q-pt-xs': $q.screen.lt.md }">
@@ -225,7 +224,10 @@
           class="col-xs-12 col-sm-12 col-md-grow flex flex-center"
           :class="{ 'no-border': $q.screen.lt.md, 'font-size-40': $q.screen.lt.md }"
         >
-          민재일보
+          <span class="translate-up">민</span>
+          <span class="translate-up">재</span>
+          <span class="translate-up">일</span>
+          <span class="translate-up">보</span>
         </div>
 
         <div
@@ -239,12 +241,15 @@
           <div class="col-auto q-mr-sm row items-center font-bold" :class="{ 'col-12 ': !$q.screen.lt.md }">
             <img class="icon q-mr-xs" src="../assets/notion.svg" /><a target="_blank" href="https://angrymusic.notion.site/">Notion</a>
           </div>
-          <div class="col-auto q-mr-sm row items-center" :class="{ 'col-12 ': !$q.screen.lt.md }">📧 angrymusic@naver.com</div>
+          <div class="col-auto q-mr-sm row items-center" :class="{ 'col-12 ': !$q.screen.lt.md }">
+            📧
+            <a href="mailto:angrymusic@naver.com" class="q-ml-xs"> angrymusic@naver.com</a>
+          </div>
           <div class="col-12 q-mr-sm row items-center font-size-13" v-if="!$q.screen.lt.md">💎 어제보다 더 채워져가는 중입니다.</div>
         </div>
       </div>
       <div id="body" class="row">
-        <div id="body-left" v-if="!$q.screen.lt.md" class="col-2 q-mt-md">
+        <div id="body-left" v-if="!$q.screen.lt.md" class="col-2 q-mt-md q-pr-sm">
           <div @mouseover="mouseProfile(true)" @mouseout="mouseProfile(false)" class="row justify-center self-start">
             <div class="col-12 q-px-sm">
               <q-img width="100%" ratio="1" src="/src/assets/heongmin.jpg" alt="" class="">
@@ -285,18 +290,20 @@
             <div class="font-bold subtitle">이때까지 경험해보신 기술들은 어떤게 있을까요?</div>
             <p>제가 사용해본 기술들은!</p>
             <div class="box font-bold row text-white q-py-md" :class="{ 'q-col-gutter-xs': $q.screen.lt.md, 'q-col-gutter-md': $q.screen.gt.sm }">
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/html5logo.svg" width="80" />HTML</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/css3logo.svg" width="80" />CSS</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/javascriptlogo.svg" width="80" />JS</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/typescriptlogo.svg" width="80" />TS</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/vuelogo.svg" width="80" />Vue.js</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/reactlogo.svg" width="80" />React.js</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/quasarlogo.svg" width="80" />quasar</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/expresslogo.svg" width="80" />express.js</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/githublogo.svg" width="80" />Github</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/dockerlogo.svg" width="80" />Docker</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/mysqllogo.svg" width="80" />Mysql</div>
-              <div class="col-xs-4 col-md-3 column flex-center"><img src="../assets/home/clogo.svg" width="80" />C</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/html5logo.svg" width="80" />HTML</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/css3logo.svg" width="80" />CSS</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/javascriptlogo.svg" width="80" />JS</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/typescriptlogo.svg" width="80" />TS</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/vuelogo.svg" width="80" />Vue.js</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/reactlogo.svg" width="80" />React.js</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/quasarlogo.svg" width="80" />quasar</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center">
+                <img src="../assets/home/expresslogo.svg" width="80" />express.js
+              </div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/githublogo.svg" width="80" />Github</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/dockerlogo.svg" width="80" />Docker</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/mysqllogo.svg" width="80" />Mysql</div>
+              <div class="zoom-in-animation col-xs-4 col-md-3 column flex-center"><img src="../assets/home/clogo.svg" width="80" />C</div>
             </div>
             <p><br />가 되겠습니다. 아직 모든 것을 통달했다고 말할 순 없으나 열심히 채워나가는 중입니다!</p>
             <div class="font-bold subtitle">그럼 이 기술들로 무엇을 해보았나요?</div>
@@ -313,13 +320,16 @@
             <q-timeline-entry subtitle="2019년 ~ 2021년 군대"> 👨‍🦲 내 머리.. </q-timeline-entry>
             <q-timeline-entry subtitle="2018년 ~ 대학"> 👨‍💻 내가 바로 개발자 </q-timeline-entry>
           </q-timeline>
+          <div id="pencil" v-if="!drawOn && typingEnd && q.screen.gt.sm" @click="drawToggle">
+            <img class="zoom-in-animation" src="../assets/home/pencil.svg" width="150" alt="" />
+          </div>
         </div>
       </div>
-      <div v-if="typingEnd" id="footer" class="q-mt-md">
+      <div v-if="typingEnd" id="footer" class="q-mt-md row">
         <q-carousel
-          class="project-container"
-          height="60vh"
-          swipeable
+          class="project-container col-12"
+          transition-prev="slide-right"
+          transition-next="slide-left"
           animated
           arrows
           control-type="regular"
@@ -328,7 +338,54 @@
           v-model:fullscreen="fullscreen"
           infinite
         >
-          <Project
+          <q-carousel-slide :name="1" class="project column">
+            <q-img width="100%" class="q-mb-sm img-max-1200 self-center" :src="projectList[0].img"></q-img>
+            <div class="">
+              <div class="font-size-20 font-bold">{{ projectList[0].title }}</div>
+              <div class="q-pb-sm">{{ projectList[0].language }}</div>
+              <div class="text-overflow-dot" :class="{ 'text-full': fullscreen }">
+                {{ projectList[0].context }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, necessitatibus?
+                <p v-if="fullscreen">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque error repellat, placeat eius nisi libero tempora voluptatum
+                  cum ratione. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, illo? Quae eligendi ipsa harum molestiae facilis
+                  minus earum fuga dignissimos?
+                </p>
+                <div v-if="!fullscreen" style="text-align: right">자세히 보려면 우측 확장아이콘을 눌러주세요 😁</div>
+              </div>
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide :name="2" class="project column">
+            <q-img width="100%" class="q-mb-sm img-max-1200 self-center" :src="projectList[1].img"></q-img>
+            <div class="">
+              <div class="font-size-20 font-bold">{{ projectList[1].title }}</div>
+              <div class="q-pb-sm">{{ projectList[1].language }}</div>
+              <div class="text-overflow-dot" :class="{ 'text-full': fullscreen }">
+                {{ projectList[1].context }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, ad.
+                <p v-if="fullscreen">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque error repellat, placeat eius nisi libero tempora voluptatum
+                  cum ratione. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, illo? Quae eligendi ipsa harum molestiae facilis
+                  minus earum fuga dignissimos?
+                </p>
+                <div v-if="!fullscreen" style="text-align: right">자세히 보려면 우측 확장아이콘을 눌러주세요 😁</div>
+              </div>
+            </div> </q-carousel-slide
+          ><q-carousel-slide :name="3" class="project column">
+            <q-img width="100%" class="q-mb-sm img-max-1200 self-center" :src="projectList[2].img"></q-img>
+            <div class="">
+              <div class="font-size-20 font-bold">{{ projectList[2].title }}</div>
+              <div class="q-pb-sm">{{ projectList[2].language }}</div>
+              <div class="text-overflow-dot" :class="{ 'text-full': fullscreen }">
+                {{ projectList[2].context }} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum, porro.
+                <p v-if="fullscreen">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque error repellat, placeat eius nisi libero tempora voluptatum
+                  cum ratione. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, illo? Quae eligendi ipsa harum molestiae facilis
+                  minus earum fuga dignissimos?
+                </p>
+                <div v-if="!fullscreen" style="text-align: right">자세히 보려면 우측 확장아이콘을 눌러주세요 😁</div>
+              </div>
+            </div>
+          </q-carousel-slide>
+          <!-- <Project
             v-for="(item, index) in projectList"
             :key="index"
             :index="index"
@@ -337,21 +394,7 @@
             :context="item.context"
             :img="item.img"
             class="project"
-          ></Project>
-          <!-- <q-carousel-slide
-            v-for="(item, index) in projectList"
-            :key="index"
-            :img="item.img"
-            :language="item.language"
-            :title="item.title"
-            class="project"
-            :name="1"
-            >첫번째<br />asd</q-carousel-slide
-          >
-          <q-carousel-slide class="project" :name="2">두번째</q-carousel-slide>
-          <q-carousel-slide class="project" :name="3">세번째</q-carousel-slide>
-          <q-carousel-slide class="project" :name="4">네번째</q-carousel-slide> -->
-
+          ></Project> -->
           <template v-slot:control>
             <q-carousel-control position="bottom-right" :offset="[18, 18]">
               <q-btn
@@ -426,10 +469,8 @@
   }
   #pencil {
     cursor: pointer;
-    position: absolute;
+    z-index: 1;
     transform: rotate(-30deg);
-    top: 150px;
-    right: -10px;
     animation: right-to-left-animation 2s;
   }
   #canvas {
@@ -450,7 +491,7 @@
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.251);
     background-color: #e2e0d7;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1200px;
     min-height: 100vh;
     padding: 10px 2vw 20px;
     margin: 10px auto;
@@ -480,14 +521,57 @@
   #footer {
   }
   a {
+    color: inherit;
     text-decoration: none;
-    color: black;
+  }
+
+  a {
+    background: linear-gradient(to right, rgba(255, 0, 0, 1), rgb(255, 0, 179), rgba(0, 100, 200, 1));
+    background-size: 0 1.5px;
+    background-position: 0% 90%;
+    background-repeat: no-repeat;
+    transition: background-size 300ms;
+  }
+
+  a:hover {
+    background-size: 100% 1.5px;
+  }
+  .zoom-in-animation {
+    transform: scale(1);
+    transition: 0.15s ease-in-out;
+  }
+  .zoom-in-animation:hover {
+    transform: scale(1.2);
+  }
+  .translate-up {
+    transform: translateY(0);
+
+    transition: 0.15s ease-in-out;
+  }
+  .translate-up:hover {
+    transform: translateY(-10px);
+  }
+  .translate-down {
+    transform: translateY(0);
+
+    transition: 0.15s ease-in-out;
+  }
+  .translate-down:hover {
+    transform: translateY(10px);
+  }
+  .img-max-1200 {
+    max-width: 900px;
+  }
+  .text-overflow-dot {
+  }
+  .text-full {
+    width: 100%;
+    white-space: normal;
   }
   .project {
     background-color: #2d2c25;
-
     color: white;
-    padding: 36px 48px;
+    padding: 48px 64px;
   }
   .opacity-animation {
     animation: opacity-animation 0.5s;
@@ -513,6 +597,9 @@
   }
   .font-size-40 {
     font-size: 40px !important;
+  }
+  .font-size-20 {
+    font-size: 20px !important;
   }
   .subtitle {
     font-size: 18px !important;

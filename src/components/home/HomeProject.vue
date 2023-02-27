@@ -6,7 +6,7 @@
     context: String,
     img: String,
   });
-  console.log('homeproject')
+  console.log(props.index);
 </script>
 <template>
   <q-carousel-slide :name="props.index">
