@@ -2,6 +2,7 @@
   import { ref, onMounted, watch } from 'vue';
   import axios from 'axios';
   import { useQuasar } from 'quasar';
+  import Project from '../components/home/HomeProject.vue';
 
   const q = useQuasar();
   const hoverProfile = ref(false);
@@ -159,6 +160,32 @@
     canvas.addEventListener('touchmove', touch);
     canvas.addEventListener('touchend', drawEnd);
   };
+  interface projectType {
+    title: string;
+    language: string;
+    context: string;
+    img: string;
+  }
+  const projectList: projectType[] = [
+    {
+      title: 'vue.js 인스타 클론 코딩',
+      language: 'vue.js',
+      context: 'vue.js.를 사용해서 인스타그램을 클론코딩을 하였습니다.',
+      img: 'https://cdn.pixabay.com/photo/2016/11/30/20/58/programming-1873854__340.png',
+    },
+    {
+      title: 'vue.js 유튜브 클론 코딩',
+      language: 'vue.js',
+      context: 'vue.js.를 사용해서 유튜브를 클론코딩을 하였습니다.',
+      img: 'https://cdn.pixabay.com/photo/2016/11/30/20/58/programming-1873854__340.png',
+    },
+    {
+      title: 'react로 todo 앱',
+      language: 'react',
+      context: 'react를 이용해서 todo앱을 제작하였습니다.',
+      img: 'https://cdn.pixabay.com/photo/2016/11/30/20/58/programming-1873854__340.png',
+    },
+  ];
 
   onMounted(() => {
     countVisit();
@@ -289,11 +316,41 @@
         </div>
       </div>
       <div v-if="typingEnd" id="footer" class="q-mt-md">
-        <q-carousel swipeable animated arrows control-color="black" v-model="slide" v-model:fullscreen="fullscreen" infinite>
-          <q-carousel-slide :name="1">첫번째<br />asd</q-carousel-slide>
-          <q-carousel-slide :name="2">두번째</q-carousel-slide>
-          <q-carousel-slide :name="3">세번째</q-carousel-slide>
-          <q-carousel-slide :name="4">네번째</q-carousel-slide>
+        <q-carousel
+          class="project-container"
+          height="60vh"
+          swipeable
+          animated
+          arrows
+          control-type="regular"
+          control-color="black"
+          v-model="slide"
+          v-model:fullscreen="fullscreen"
+          infinite
+        >
+          <Project
+            v-for="(item, index) in projectList"
+            :key="index"
+            :index="index"
+            :title="item.title"
+            :language="item.language"
+            :context="item.context"
+            :img="item.img"
+            class="project"
+          ></Project>
+          <!-- <q-carousel-slide
+            v-for="(item, index) in projectList"
+            :key="index"
+            :img="item.img"
+            :language="item.language"
+            :title="item.title"
+            class="project"
+            :name="1"
+            >첫번째<br />asd</q-carousel-slide
+          >
+          <q-carousel-slide class="project" :name="2">두번째</q-carousel-slide>
+          <q-carousel-slide class="project" :name="3">세번째</q-carousel-slide>
+          <q-carousel-slide class="project" :name="4">네번째</q-carousel-slide> -->
 
           <template v-slot:control>
             <q-carousel-control position="bottom-right" :offset="[18, 18]">
@@ -383,18 +440,20 @@
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background-color: #e2e0d7;
+    background-color: rgb(245, 210, 163);
     position: relative;
 
     font-family: 'Chosun-light', serif;
     font-size: 14px;
   }
   #bg {
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.251);
+    background-color: #e2e0d7;
     width: 100%;
-    max-width: 1440px;
+    max-width: 1400px;
     min-height: 100vh;
-    padding: 10px 5vw;
-    margin: 0 auto;
+    padding: 10px 2vw 20px;
+    margin: 10px auto;
   }
   #header {
     border-bottom: double 3px;
@@ -419,14 +478,22 @@
     border-left: solid 1px;
   }
   #footer {
-    border: 1px solid black;
   }
   a {
     text-decoration: none;
     color: black;
   }
+  .project {
+    background-color: #2d2c25;
+
+    color: white;
+    padding: 36px 48px;
+  }
   .opacity-animation {
     animation: opacity-animation 0.5s;
+  }
+  .project-container {
+    border-radius: 15px;
   }
   .box {
     background-color: #2d2c25;
