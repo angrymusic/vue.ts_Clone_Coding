@@ -339,8 +339,8 @@
           infinite
         >
           <q-carousel-slide :name="1" class="project column">
-            <q-img width="100%" class="q-mb-sm img-max-1200 self-center" :src="projectList[0].img"></q-img>
-            <div class="">
+            <q-img width="100%" class="q-mb-sm max-width-900 self-center" :src="projectList[0].img"></q-img>
+            <div class="max-width-1200 self-center">
               <div class="font-size-20 font-bold">{{ projectList[0].title }}</div>
               <div class="q-pb-sm">{{ projectList[0].language }}</div>
               <div class="text-overflow-dot" :class="{ 'text-full': fullscreen }">
@@ -348,15 +348,16 @@
                 <p v-if="fullscreen">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque error repellat, placeat eius nisi libero tempora voluptatum
                   cum ratione. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, illo? Quae eligendi ipsa harum molestiae facilis
-                  minus earum fuga dignissimos?
+                  minus earum fuga dignissimos? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus, ratione ullam? Error magni facilis
+                  quia molestiae necessitatibus rerum, quibusdam ex soluta dignissimos reprehenderit, nam modi dolore totam eveniet corrupti quis?
                 </p>
                 <div v-if="!fullscreen" style="text-align: right">자세히 보려면 우측 확장아이콘을 눌러주세요 😁</div>
               </div>
             </div>
           </q-carousel-slide>
           <q-carousel-slide :name="2" class="project column">
-            <q-img width="100%" class="q-mb-sm img-max-1200 self-center" :src="projectList[1].img"></q-img>
-            <div class="">
+            <q-img width="100%" class="q-mb-sm max-width-900 self-center" :src="projectList[1].img"></q-img>
+            <div class="max-width-1200 self-center">
               <div class="font-size-20 font-bold">{{ projectList[1].title }}</div>
               <div class="q-pb-sm">{{ projectList[1].language }}</div>
               <div class="text-overflow-dot" :class="{ 'text-full': fullscreen }">
@@ -364,14 +365,15 @@
                 <p v-if="fullscreen">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque error repellat, placeat eius nisi libero tempora voluptatum
                   cum ratione. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, illo? Quae eligendi ipsa harum molestiae facilis
-                  minus earum fuga dignissimos?
+                  minus earum fuga dignissimos? Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero corporis nam consequuntur non. Nostrum
+                  doloremque hic, dolor ratione earum nobis aspernatur iure ullam. Facilis sequi tempore sunt, magnam delectus neque.
                 </p>
                 <div v-if="!fullscreen" style="text-align: right">자세히 보려면 우측 확장아이콘을 눌러주세요 😁</div>
               </div>
             </div> </q-carousel-slide
           ><q-carousel-slide :name="3" class="project column">
-            <q-img width="100%" class="q-mb-sm img-max-1200 self-center" :src="projectList[2].img"></q-img>
-            <div class="">
+            <q-img width="100%" class="q-mb-sm max-width-900 self-center" :src="projectList[2].img"></q-img>
+            <div class="max-width-1200 self-center">
               <div class="font-size-20 font-bold">{{ projectList[2].title }}</div>
               <div class="q-pb-sm">{{ projectList[2].language }}</div>
               <div class="text-overflow-dot" :class="{ 'text-full': fullscreen }">
@@ -379,7 +381,9 @@
                 <p v-if="fullscreen">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque error repellat, placeat eius nisi libero tempora voluptatum
                   cum ratione. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum, illo? Quae eligendi ipsa harum molestiae facilis
-                  minus earum fuga dignissimos?
+                  minus earum fuga dignissimos? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore pariatur sunt dignissimos tempora
+                  aperiam rerum sequi molestiae voluptate, praesentium exercitationem deleniti? Consequuntur exercitationem facilis aut placeat
+                  blanditiis non ullam dolorem?
                 </p>
                 <div v-if="!fullscreen" style="text-align: right">자세히 보려면 우측 확장아이콘을 눌러주세요 😁</div>
               </div>
@@ -481,7 +485,7 @@
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background-color: rgb(245, 210, 163);
+    background-color: #B1AC88;
     position: relative;
 
     font-family: 'Chosun-light', serif;
@@ -559,8 +563,12 @@
   .translate-down:hover {
     transform: translateY(10px);
   }
-  .img-max-1200 {
+  .max-width-900 {
     max-width: 900px;
+  }
+  .max-width-1200 {
+    width: 100%;
+    max-width: 1200px;
   }
   .text-overflow-dot {
   }
