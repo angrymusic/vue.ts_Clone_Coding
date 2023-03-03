@@ -9,8 +9,8 @@
 
 - /home 포트폴리오
 
-- /instagram 인스타 클론 코딩
+- /instagram 인스타 클론 코딩 스샷  
   https://www.notion.so/angrymusic/vue-js-c2bc2d17514240ab989e4ad41a805f06?pvs=4
 
-- /youtube 유튜브 클론 코딩
+- /youtube 유튜브 클론 코딩 스샷  
   https://www.notion.so/angrymusic/vue-js-438b94b8858245d49c904da2ad89e2ed?pvs=4
