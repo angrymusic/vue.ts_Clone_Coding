@@ -485,7 +485,7 @@
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background-color: #B1AC88;
+    background-color: #b1ac88;
     position: relative;
 
     font-family: 'Chosun-light', serif;
